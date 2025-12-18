@@ -1,7 +1,16 @@
 <template>
   <div
     class="p-6 max-w-5xl mx-auto rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 border border-gray-300 text-black shadow-xl mt-5"
-  ><!-- Page Loader -->
+  >
+  <button
+  @click="goBack"
+  class="mb-4 inline-flex items-center gap-2 px-4 py-2
+         rounded-lg bg-gray-300 text-gray-800 font-medium
+         hover:bg-gray-400 transition"
+>
+  ← Back
+</button>
+  <!-- Page Loader -->
     <Loader :show="isloading" v-if="isloading" title="Loading Show Details..." subTitle="This may take a few seconds, please wait to view the show details."/>
     <!-- Show details -->
     <div v-else class="flex flex-col md:flex-row items-start gap-8">
@@ -30,7 +39,19 @@
           <span
             class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-sm font-semibold"
           >
-            ⭐ {{ show.rating?.average ?? 'No Rating' }}
+          <!-- Star Icon svg for rating -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-3 h-3 sm:w-4 sm:h-4 text-yellow-500 flex-shrink-0"
+            >
+              <path
+                d="M12 2l2.94 6.63L22 9.24l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.11 2 9.24l7.06-.61L12 2z"
+              />
+            </svg>
+            <!-- Display average rating or 'No Rating' if not available -->
+             {{ show.rating?.average ?? 'No Rating' }}
           </span>
         </div>
 
@@ -72,7 +93,15 @@ const router = useRouter()
 import { useTvMazeStore } from '../stores/tvmaze'
 const tvmazeStore = useTvMazeStore()
 
+//to navigate back to the previous page
+const goBack = () => {
+  router.back()
+}
+
+//computed property to get show details from the store
 const show = computed(()=> tvmazeStore.showbyID)
+
+//loading state
 const isloading = ref<boolean>(false)
 
 onBeforeMount(async () => {
