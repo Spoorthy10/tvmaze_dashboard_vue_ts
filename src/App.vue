@@ -6,7 +6,7 @@
 </script>
 
 <template>
-  <div class="min-h-[90vh] flex flex-col">
+  <div class="min-h-screen flex flex-col">
     <!--to get the navigation bar for all the pages-->
     <NavBar />
     <main class="flex-1 pt-10">

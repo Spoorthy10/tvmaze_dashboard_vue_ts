@@ -20,6 +20,7 @@ This application categorises the TV shows based on their genere and is sorted ba
     HTTP Client: Axios - v1.13.2, 
      // axios is used to make the API calls to fetch the data from the TVMaze API.
      // axios has better error handling and  it parses JSON responses automatically.
+     // It also supports request and response interceptors, which can be useful for adding headers or logging.
 
     State Management : Pinia - v3.0.4,
         // Pinia is used for state management in this project. 

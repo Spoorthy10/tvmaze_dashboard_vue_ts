@@ -68,7 +68,6 @@ export const useTvMazeStore = defineStore('tvmazestore', {
         }
       } catch (err) {
         this.error = err instanceof Error ? err.message : 'Something went wrong'
-        console.error(err)
       }
     },
 
@@ -81,7 +80,6 @@ export const useTvMazeStore = defineStore('tvmazestore', {
         this.searched_tvshow = response.data
       } catch (err) {
         this.error = err instanceof Error ? err.message : 'Something went wrong'
-        console.error(err)
       }
     }
   }

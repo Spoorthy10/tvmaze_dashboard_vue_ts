@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-6 max-w-5xl mx-auto rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 border border-gray-300 text-black shadow-xl mt-5"
+    class="p-6 max-w-5xl mx-auto rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 border border-gray-300 text-black shadow-xl mt-8"
   >
   <button
   @click="goBack"

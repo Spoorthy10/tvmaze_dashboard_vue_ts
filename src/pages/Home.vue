@@ -10,7 +10,7 @@
 
     <div v-else>
       <!-- Search Section -->
-      <div class="flex flex-col sm:flex-row gap-3 mb-6">
+      <div class="flex flex-col sm:flex-row gap-3 my-6">
         <!-- Search Input Field -->
         <input
           v-model="search_show_name"
@@ -124,27 +124,6 @@ const isloading = ref<boolean>(false)
 
 // Responsive card width state
 const cardWidth = ref('200px')
-const screenWidth = ref(window.innerWidth)
-
-// Update card width based on screen size
-const updateCardWidth = () => {
-  const width = window.innerWidth
-  screenWidth.value = width
-  
-  if (width < 375) { // Very small phones (iPhone SE, etc.)
-    cardWidth.value = '120px'
-  } else if (width < 640) { // Mobile
-    cardWidth.value = '140px'
-  } else if (width < 768) { // Small tablets
-    cardWidth.value = '160px'
-  } else if (width < 1024) { // Tablets
-    cardWidth.value = '180px'
-  } else if (width < 1280) { // Laptops
-    cardWidth.value = '200px'
-  } else {
-    cardWidth.value = '220px' // Large screens
-  }
-}
 
 // Search functionality
 const search_show_name = ref<string>('')
@@ -158,7 +137,7 @@ const searchShow = async () => {
     const searchdata = "q=" + encodeURIComponent(search_show_name.value.trim())
     await tvmazeStore.get_tvShow_onSearch(searchdata)
   } catch (error) {
-    console.error('Search failed:', error)
+    alert('Search failed. Please try again.')
   } finally {
     isloading.value = false
   }
@@ -172,7 +151,7 @@ const clearFilters = async () => {
     tvmazeStore.searched_tvshow = []
     await tvmazeStore.get_tvShows()
   } catch (error) {
-    console.error('Clear filters failed:', error)
+    alert('Failed to clear filters. Please try again.')
   } finally {
     isloading.value = false
   }
@@ -186,25 +165,13 @@ const goToShow = (id: number) => {
 // Computed properties
 const showsByGenre = computed(() => tvmazeStore.showsByGenre)
 
-// to handle window resize for responsive card width
-onMounted(() => {
-  updateCardWidth()
-  window.addEventListener('resize', updateCardWidth)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', updateCardWidth)
-})
-
 onBeforeMount(async () => {
-  updateCardWidth()
-  window.addEventListener('resize', updateCardWidth)
   isloading.value = true
   try {
     //to fetch all tv shows
     await tvmazeStore.get_tvShows()
   } catch (error) {
-    console.error('Failed to load TV shows:', error)
+    alert('Failed to load TV shows. Please try again.')
   } finally {
     isloading.value = false
   }
