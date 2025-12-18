@@ -2,7 +2,7 @@
 
 This template should help get you started developing with Vue 3 and TypeScript in Vite. 
 
-This application categorises the TV shows based on their genere and is sorted based on the ratings of the show. It is also provided with the search field to get the shows based on you preference.
+This TVMaze application categorises the TV shows based on their genere and is sorted based on the ratings of the show. It is also provided with the search field to get the shows based on you preference.
 ### Features:
     1. User can browse for the shows based on the genre of the shows and further they are sorted based on their ratings(in descending order) in the dashboard.
     2. User can search for the particular show by entering the show name in the search field. 
@@ -50,7 +50,7 @@ This application categorises the TV shows based on their genere and is sorted ba
        npm run dev
 
 ### To run the unit tests:
-    npx vitest
+    npm run test
 
 
 
