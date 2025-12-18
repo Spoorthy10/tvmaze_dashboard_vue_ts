@@ -16,7 +16,7 @@
           v-model="search_show_name"
           type="text"
           placeholder="Search TV shows..."
-          class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+          class="w-full px-4 py-3 rounded-lg bg-gray-100 text-gray-900 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
           @keydown.enter="searchShow"
           @keydown.esc="clearFilters"
         />
@@ -33,7 +33,7 @@
 
           <button
             @click="clearFilters"
-            class="w-full sm:w-auto px-4 py-3 bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-500 active:bg-gray-400 dark:active:bg-gray-400 transition-all duration-200 flex-1 sm:flex-none"
+            class="w-full sm:w-auto px-4 py-3 bg-gray-200 text-gray-800 rounded-lg font-medium hover:bg-gray-300  active:bg-gray-400 transition-all duration-200 flex-1 sm:flex-none"
           >
             Clear
           </button>
@@ -45,10 +45,10 @@
         <div
           v-for="(shows, genre) in showsByGenre"
           :key="genre"
-          class="mb-6 bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 rounded-xl shadow-sm"
+          class="mb-6 bg-gray-100  p-4 sm:p-6 rounded-xl shadow-sm"
         >
           <!-- Genre Title -->
-          <h2 class="text-lg sm:text-xl lg:text-2xl font-bold mb-4 text-teal-600 dark:text-teal-400 text-start">
+          <h2 class="text-lg sm:text-xl lg:text-2xl font-bold mb-4 text-teal-600 text-start">
             {{ genre }}
           </h2>
 
@@ -71,9 +71,9 @@
       </div>
 
       <!-- When filter is applied -->
-      <div v-else class="mb-8 bg-gray-100 dark:bg-gray-800 p-4 sm:p-6 rounded-xl shadow-sm">
+      <div v-else class="mb-8 bg-gray-100 p-4 sm:p-6 rounded-xl shadow-sm">
         <!-- Search Results Heading -->
-        <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-teal-600 dark:text-teal-400 capitalize">
+        <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-teal-600 capitalize">
           Shows you searched for
         </h2>
         
@@ -97,11 +97,11 @@
         </div>
         
         <!-- No Results Message -->
-        <div v-else class="text-center py-8 text-gray-600 dark:text-gray-400">
+        <div v-else class="text-center py-8 text-gray-600">
           <p class="text-lg">No shows found for "{{ search_show_name }}"</p>
           <button 
             @click="clearFilters"
-            class="mt-4 px-4 py-2 text-sm bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+            class="mt-4 px-4 py-2 text-sm bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200  transition-colors"
           >
             Clear Search
           </button>
@@ -128,15 +128,19 @@ const screenWidth = ref(window.innerWidth)
 
 // Update card width based on screen size
 const updateCardWidth = () => {
-  screenWidth.value = window.innerWidth
-  if (screenWidth.value < 640) {
-    cardWidth.value = '140px' // Mobile
-  } else if (screenWidth.value < 768) {
-    cardWidth.value = '160px' // Small tablets
-  } else if (screenWidth.value < 1024) {
-    cardWidth.value = '180px' // Tablets
-  } else if (screenWidth.value < 1280) {
-    cardWidth.value = '200px' // Laptops
+  const width = window.innerWidth
+  screenWidth.value = width
+  
+  if (width < 375) { // Very small phones (iPhone SE, etc.)
+    cardWidth.value = '120px'
+  } else if (width < 640) { // Mobile
+    cardWidth.value = '140px'
+  } else if (width < 768) { // Small tablets
+    cardWidth.value = '160px'
+  } else if (width < 1024) { // Tablets
+    cardWidth.value = '180px'
+  } else if (width < 1280) { // Laptops
+    cardWidth.value = '200px'
   } else {
     cardWidth.value = '220px' // Large screens
   }
@@ -182,7 +186,7 @@ const goToShow = (id: number) => {
 // Computed properties
 const showsByGenre = computed(() => tvmazeStore.showsByGenre)
 
-// Lifecycle hooks
+// to handle window resize for responsive card width
 onMounted(() => {
   updateCardWidth()
   window.addEventListener('resize', updateCardWidth)
@@ -193,8 +197,11 @@ onUnmounted(() => {
 })
 
 onBeforeMount(async () => {
+  updateCardWidth()
+  window.addEventListener('resize', updateCardWidth)
   isloading.value = true
   try {
+    //to fetch all tv shows
     await tvmazeStore.get_tvShows()
   } catch (error) {
     console.error('Failed to load TV shows:', error)
@@ -222,21 +229,6 @@ onBeforeMount(async () => {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
-
-/* Dark mode scrollbar */
-@media (prefers-color-scheme: dark) {
-  ::-webkit-scrollbar-track {
-    background: #374151;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: #6b7280;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #9ca3af;
-  }
 }
 
 /* Prevent layout shift during loading */
