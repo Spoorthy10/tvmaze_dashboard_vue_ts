@@ -3,7 +3,6 @@
     <!-- Page Loader -->
     <Loader 
       v-if="isloading" 
-      :show="isloading" 
       title="Loading TV Shows..." 
       subTitle="This may take a few seconds, please wait to view the shows."
     />

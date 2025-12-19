@@ -11,7 +11,7 @@
   ← Back
 </button>
   <!-- Page Loader -->
-    <Loader :show="isloading" v-if="isloading" title="Loading Show Details..." subTitle="This may take a few seconds, please wait to view the show details."/>
+    <Loader v-if="isloading" title="Loading Show Details..." subTitle="This may take a few seconds, please wait to view the show details."/>
     <!-- Show details -->
     <div v-else class="flex flex-col md:flex-row items-start gap-8">
       
